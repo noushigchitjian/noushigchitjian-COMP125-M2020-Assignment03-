@@ -56,17 +56,18 @@ File Description: my Java Script file for all my pages functionality.
                 let variable = document.getElementsByClassName("aboutMe")[0];
 
                 // Loop to see which page we are in
-                if (variable = document.getElementsByClassName("aboutMe")[0]) {
+                if 
+                (variable = document.getElementsByClassName("aboutMe")[0]) {
                     document.getElementsByClassName("aboutMe")[0].innerHTML = paragArray[0].aboutMe;
-                } else if (variable = document.getElementsByClassName("pro1")[0]) {
+                } else if 
+                (variable = document.getElementsByClassName("pro1")[0]) {
                     document.getElementsByClassName("pro1")[0].innerHTML = paragArray[0].ProjectOne;
                     document.getElementsByClassName("pro2")[0].innerHTML = paragArray[0].ProjectTwo;
                     document.getElementsByClassName("pro3")[0].innerHTML = paragArray[0].ProjectThree;
                 }
             }
         });
-    }
-        
+    }        
     
 
     function FooterLoader() {
@@ -91,4 +92,98 @@ File Description: my Java Script file for all my pages functionality.
             }
         });
     }
-})
+
+    function validateForm() {
+        let contactForm = document.forms[0];
+
+        if (contactForm) {
+            contactForm.noValidate = true;
+
+            let errorMessage = document.getElementById("errorMessage");
+
+            let firstName = document.getElementById("firstName");
+            firstName.addEventListener("blur", (event) => {
+                if (firstName.value.length < 2) {
+                    firstName.focus();
+                    errorMessage.hidden = false;
+                    errorMessage.textContent = "Please enter at least 2 or more characters";
+                } else {
+                    errorMessage.hidden = true;
+                }
+            });
+
+            let lastName = document.getElementById("lastName");
+            lastName.addEventListener("blur", (event) => {
+                if (lastName.value.length < 2) {
+                    lastName.focus();
+                    errorMessage.hidden = false;
+                    errorMessage.textContent = "Please enter at least 2 or more characters";
+                } 
+                else {
+                    errorMessage.hidden = true;
+                }
+            });
+
+            let contactNumber = document.getElementById("contactNumber");
+            contactNumber.addEventListener("blur", (event) => {
+                let phoneNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; // Ref: https://www.w3resource.com/javascript/form/javascript-form-validation.php
+                if (contactNumber.value.match(phoneNo)) {
+                    errorMessage.hidden = true;
+                    contactNumber.classList.add('valid'); // If a form element validated succesfully, takes a "valid" class
+                }
+                else {
+                    contactNumber.focus();
+                    errorMessage.hidden = false;
+                    errorMessage.textContent = "Please enter a valid Phone number >>10 digits<<<";
+                    contactNumber.classList.remove('valid'); // If a form element cannot be validated, loses the "valid" class
+                }
+            });
+
+            let email = document.getElementById("email");
+            email.addEventListener("blur", (event) => {
+                let eMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Ref: https://www.w3resource.com/javascript/form/javascript-form-validation.php
+                if (email.value.match(eMail)) {
+                    errorMessage.hidden = true;
+                    email.classList.add('valid'); // If a form element validated succesfully, takes a "valid" class
+                }
+                else {
+                    email.focus();
+                    errorMessage.hidden = false;
+                    errorMessage.textContent = "Please enter a valid email address";
+                    email.classList.remove('valid'); // If a form element cannot be validated, loses the "valid" class
+                 }
+            });
+
+            // creates a "hook" or reference to the button element with an id of "submitButton"
+            let submitButton = document.getElementById("submitButton");
+            submitButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                console.log("Form Successfully Submitted!");
+            });
+        }
+        return false;
+    }
+
+    // Start the functions
+    function Start() {
+        console.log('%cApp Successfully Started...', "color:darkred; font-size: 45px;");
+
+        HeaderLoader();
+        Paragraphs()
+        FooterLoader();
+        validateForm();
+    }
+
+    window.addEventListener("load", Start);
+
+})();
+
+
+
+
+
+
+
+
+
+
